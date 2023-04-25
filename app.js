@@ -24,11 +24,24 @@ db.once("open", () => {
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
   Todo.find()
     .lean()
     .then((todos) => res.render("index", { todos }))
     .catch((error) => console.error(error));
+});
+
+app.get("/todos/new", (req, res) => {
+  res.render("new");
+});
+
+app.post("/todos", (req, res) => {
+  const name = req.body.name;
+  return Todo.create({ name })
+    .then(() => res.redirect("/"))
+    .catch((error) => console.log(error));
 });
 
 app.listen(3000, () => {
