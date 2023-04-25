@@ -2,8 +2,16 @@
 
 <ul>
   {{#each todos}}
-    <li>{{this.name}}</li>
-    <a href="./todos/{{this._id}}">detail</a>
-    <a href="./todos/{{this._id}}/edit">edit</a>
+    <li>{{this.name}}
+      <a href="./todos/{{this._id}}">detail</a>
+      <a href="./todos/{{this._id}}/edit">edit</a>
+      <form
+        action="/todos/{{this._id}}/delete"
+        method="post"
+        style="display: inline"
+      >
+        <button type="submit">delete</button>
+      </form>
+    </li>
   {{/each}}
 </ul>
