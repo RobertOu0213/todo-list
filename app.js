@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
+const methodOverride = require("method-override");
 const app = express();
 const Todo = require("./models/todo");
 
@@ -25,6 +26,9 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 app.use(express.urlencoded({ extended: true }));
+
+//method override
+app.use(methodOverride("_method"));
 
 //瀏覽全部資料
 app.get("/", (req, res) => {
@@ -64,7 +68,7 @@ app.get("/todos/:id/edit", (req, res) => {
 });
 
 //編輯todo
-app.post("/todos/:id/edit", (req, res) => {
+app.put("/todos/:id", (req, res) => {
   const id = req.params.id;
   const { name, isDone } = req.body;
   return Todo.findById(id)
@@ -77,7 +81,8 @@ app.post("/todos/:id/edit", (req, res) => {
     .catch((error) => console.log("error"));
 });
 
-app.post("/todos/:id/delete", (req, res) => {
+//刪除todo
+app.delete("/todos/:id", (req, res) => {
   const id = req.params.id;
   return Todo.findById(id)
     .then((todo) => todo.remove())
