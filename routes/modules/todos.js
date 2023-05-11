@@ -7,6 +7,7 @@ router.get("/new", (req, res) => {
   res.render("new");
 });
 
+//新增todo
 router.post("/", (req, res) => {
   let name = req.body.name;
 
