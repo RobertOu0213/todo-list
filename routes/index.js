@@ -8,8 +8,10 @@ const todos = require("./modules/todos");
 //引入login 模組程式碼
 const users = require("./modules/users");
 
-router.use("/", home);
-router.use("/todos", todos);
+const { authenticator } = require("../middleware/auth");
+
+router.use("/todos", authenticator, todos);
 router.use("/users", users);
+router.use("/", authenticator, home);
 
 module.exports = router;
