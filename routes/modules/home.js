@@ -5,7 +5,8 @@ const Todo = require("../../models/todo");
 
 //定義路由首頁
 router.get("/", (req, res) => {
-  Todo.find()
+  const userId = req.user._id;
+  Todo.find({ userId })
     .lean()
     .sort({ _id: "desc" })
     .then((todos) => res.render("index", { todos }))
