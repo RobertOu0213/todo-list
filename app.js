@@ -7,14 +7,12 @@ const routes = require("./routes");
 const PORT = process.env.PORT || 3000;
 const usePassport = require("./config/passport");
 
-console.log(process.env);
+// console.log(process.env);
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
-console.log("----------------");
-
-console.log(process.env);
+// console.log("----------------");
+// console.log(process.env);
 
 require("./config/mongoose");
 const app = express();
