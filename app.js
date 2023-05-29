@@ -5,10 +5,18 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const routes = require("./routes");
 const PORT = process.env.PORT || 3000;
-
 const usePassport = require("./config/passport");
-require("./config/mongoose");
 
+console.log(process.env);
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
+console.log("----------------");
+
+console.log(process.env);
+
+require("./config/mongoose");
 const app = express();
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -17,7 +25,7 @@ app.set("view engine", "handlebars");
 //express session
 app.use(
   session({
-    secret: "ThisIsMySecret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
